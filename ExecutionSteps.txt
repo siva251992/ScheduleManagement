@@ -1,0 +1,20 @@
+In Cmd 
+
+C:\Users\Administrator\eclipse-workspace\mmScheduler>mvn package exec:java
+
+
+Do You want to clear the DB? Yes/No
+
+Enter the materialID-- String eg:AA
+
+Enter the Start number of Schedules--- Integer eg:1
+
+Enter the End number of Schedules--- Integer eg:10
+
+Enter the number of Items to be created --- Integer eg:100
+
+
+10 Schedules will be created with Each Schedules containing 100 Items
+
+MaterialId for Schedule 1 would start from MAT-AA-1-1 to MAT-AA-1-100
+MaterialId for Schedule 1 would start from MAT-AA-2-1 to MAT-AA-2-100
