@@ -1,0 +1,5 @@
+org\com\scheduleproperties\Items.class
+org\com\schedulemanagement\mmScheduler\DateConfiguration.class
+org\com\scheduleproperties\Schedule.class
+org\com\scheduleproperties\AdditionalInfo.class
+org\com\schedulemanagement\mmScheduler\PostSchedule.class
