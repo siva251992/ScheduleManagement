@@ -6,24 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
 import org.com.scheduleproperties.Items;
 import org.com.scheduleproperties.Schedule;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import junit.framework.Assert;
 
-
-public class PostSchedule {
+public class PostSchedule_2 {
 	
 	public static void postRequest() throws InterruptedException, ParseException {
 		@SuppressWarnings("resource")
-		//**********ScannerClss- To set the values during RunTime*****************
 		
+		//**********ScannerClss- To set the values during RunTime*****************
 		Scanner myObj = new Scanner(System.in);
 		
 		//**********DB Clear Step**************
-		
 		  System.out.println("Do You want to clear the DB?");
 		  String dbClear=myObj.nextLine();
 		   if(dbClear.equalsIgnoreCase("Yes")){
@@ -35,45 +35,69 @@ public class PostSchedule {
 		   else {
 			   System.out.println("DB is not Cleared");
 		}
-		   
-		   int count=1;
 		
-		//*****************To set MaterialID,Schedule&Items Count***************
+		
+			int count=1;
+		//****************Object for DateConfiguration Class*****************	
+			DateConfiguration d=new DateConfiguration();
 			
+		//*************To Set MediaType Value******************
+			System.out.println("Enter MediaType");
+			String mediaType=myObj.nextLine();
+			if(mediaType.equalsIgnoreCase("Video")) {
+				mediaType="Video";
+			}
+			else if(mediaType.equalsIgnoreCase("Subtitles")) {
+				mediaType="Subtitles";
+			}
+			else if (mediaType.equalsIgnoreCase("AD")) {
+				mediaType="AD";
+			}
+			else {
+				System.out.println("Invalid MediaType");
+				System.exit(0);
+			}
 			
-			System.out.println("Enter the materialId");
-			String userName = myObj.nextLine();
+		//**************To Set TimeRequired value*************
+			System.out.println("Enter TimeRequired range");
+			String timeRequired = myObj.nextLine();
+			if (timeRequired.equalsIgnoreCase("current")) {
+				timeRequired=d.timeRequired();				
+			}
+			else if (timeRequired.equalsIgnoreCase("past")) {
+				timeRequired=d.pasttimeRequired();
+			}
+			else {
+				System.out.println("Invalid Value");
+				System.exit(0);
+				
+			}
+			
+		//**************To set Schedule & Item Count***********
 			System.out.println("Enter the Start number of Schedules");
 			int reqId1 = myObj.nextInt();
 			System.out.println("Enter the End number of Schedules");
 			int reqId2 = myObj.nextInt();
-			System.out.println("Enter the number of Items to be created");
+			System.out.println("Enter the number of Items");
 			int matID=myObj.nextInt();
 			
-		//****************Object for DateConfiguration Class*****************	
-			DateConfiguration d=new DateConfiguration();
-			
-			
+			int mat=1;
 			for (int i = reqId1; i <=reqId2; i++) {
 	    		
 				RequestSpecification request = RestAssured.with();
 				Map<String, String> headers = new HashMap<String, String>();
-			//************************Set Content-Type****************************	
+				//************************Set Content-Type****************************	
 				
 				headers.put("Content-Type", "application/json");
-				
-				
-			//************************Set Authorization****************************	
-				
+				//************************Set Authorization****************************	
 				
 				headers.put("Authorization", "bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Im1idGVzdC8yMDE3MDcyNiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJicm46c2VydmljZTpzaC1zY2hlZHVsZS1pbXBvcnQtc2VydmljZSIsImV4cCI6MTU5NDkwMDI1NCwiaWF0IjoxNTYzMzY0MjU0LCJpc3MiOiJtb2NrYmlyZCIsInN1YiI6ImJybjpudWM6Y2xpZW50OnN0YXJnYXRlOmZsYWcifQ.n8MXhz_ww2-BMKJZA9CuOS3VBq759Pu4P5dPz_QMa7kgoq-ZTF2htIBeu9KOUZwNgugVwUEK5gCxD5fdJhVU2fZYhyoRQ5CcBd8dRQLUE_OouVI_UGHekMpoPeQIpWMTBOc2Gl1Q6EtMHfAc0h-1Filw_N2nIkO7LIAZVmrHFLOWRa0tZaC0BeKYY0E0hEskZ7Wt1jBT2g4Mb6Icd9R_gW2u3__rFUWCgzt74NUK5WmthsdPmrz34vxAihrAyV2EX-aUbk_cnDLd_S_oZFJW6pSEqiv75xs5e0tMRSCOHCavQDld51xhxaHZ2Ub48J8uR3coWsc2Anvimb4O8bbyIQ");
-								
 				
-			//***********************Set First-Level Property Values*************	
+				//***********************Set First-Level Property Values*************
 				
 				String req_Id=""+i;
 				Schedule s=new Schedule();
-				s.setClient("new");
+				s.setClient("Bonnier");
 				s.setChannel("Cmore_Stars");
 				s.setDateRequired(d.dateRequired());
 				s.setRequestId(req_Id);
@@ -82,48 +106,47 @@ public class PostSchedule {
 				List<Items> l = new ArrayList<Items>();
 				
 				for (int j = 1; j <=matID; j++) {
-			//***********************Set Item-Level Property Values*************	
+				//***********************Set Item-Level Property Values*************	
 					
 					Items item1=new Items();
-					String mat_Id="MAT-"+userName+"-"+i+"-"+j;
+					String mat_Id="MAT-"+"-"+mat;
 					item1.setMaterialID(mat_Id);
 					item1.setContentType("Programme");
 					item1.setTitle("test1");
-					item1.setTimeRequired(d.timeRequired());
+					item1.setTimeRequired(timeRequired);
 					item1.setDuration(100);
-					item1.setMediaType("Video");
+					item1.setMediaType(mediaType);
 					item1.setMediaSource("File");
 					
 					l.add(item1);
-									
+					mat++;
+					
 				}
+				
 				s.setItems(l);
 				Thread.sleep(500);
-				
-			//**********POST Request***********
-				
+				//**********POST Request***********
 				
 				Response response = request.baseUri("https://ulbw5caxdh.execute-api.eu-west-1.amazonaws.com/flag/").headers(headers).body(s).post("/sch-imp/schedule");
 				int code=202;
-			//*********StatusCode Assertion*****
 				
+				//*********StatusCode Assertion*****
 				
      			Assert.assertEquals(code, response.getStatusCode());
-				System.out.println("Schedule "+count +" Created successfully ");
+				System.out.println("Schedule Created successfully "+count);
+				System.out.println("Response Time -"+response.time()+"ms");
 				count++;
 	    	}
 			System.out.println("Done");
+	
+		 			   
 	}
+
 	
-	
- 
-			
-	public static void main(String[] args) throws InterruptedException, ParseException {
+		
+	public static void main(String[] args) throws ParseException, InterruptedException {
 		
 		postRequest();
-		
-		
-		
 	}
 }
 
