@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.com.scheduleproperties.Items;
-import org.com.scheduleproperties.Schedule;
+import org.ericsson.nucleus.test.mmschedule.models.Item;
+import org.ericsson.nucleus.test.mmschedule.models.Schedule;
+
+import static io.restassured.RestAssured.given;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
@@ -28,8 +30,7 @@ public class PostScheduleStatic {
 			DateConfiguration d=new DateConfiguration();
 			
 		//***********Create 300Schedules with 300Items*******************
-			
-			for (int i=1;i<=100; i++) {
+			for (int i=1;i<=1; i++) {
 				
 				Map<String, String> headers = new HashMap<String, String>();
 				//************************Set Content-Type****************************	
@@ -50,10 +51,10 @@ public class PostScheduleStatic {
 				s.setRequestId(req_Id);
 				s.setVersion("V001");
 				s.setScheduleType("Primary");
-				List<Items> l = new ArrayList<Items>();
+				List<Item> l = new ArrayList<Item>();
 				
-				for (int j =1; j <=50; j++) {
-					Items item1=new Items();
+				for (int j =1; j <=1; j++) {
+					Item item1=new Item();
 					String mat_Id="MAT-"+"-"+i+"-"+j;
 					item1.setMaterialID(mat_Id);
 					item1.setContentType("Programme");
@@ -65,42 +66,19 @@ public class PostScheduleStatic {
 					
 					l.add(item1);
 				}
-				/*
-				for (int k =51; k<=100; k++) {
-					Items item1=new Items();
-					String mat_Id="MAT-"+"-"+i+"-"+k;
-					item1.setMaterialID(mat_Id);
-					item1.setContentType("Programme");
-					item1.setTitle("test1");
-					item1.setTimeRequired(d.timeRequired());
-					item1.setDuration(100);
-					item1.setMediaType("Video");
-					item1.setMediaSource("File");
-					
-					l.add(item1);
-				}
-				for (int m=101; m<=110; m++) {
-					Items item1=new Items();
-					String mat_Id="MAT-"+"-"+i+"-"+m;
-					item1.setMaterialID(mat_Id);
-					item1.setContentType("Programme");
-					item1.setTitle("test1");
-					item1.setTimeRequired(d.timeRequired());
-					item1.setDuration(100);
-					item1.setMediaType("Subtitles");
-					item1.setMediaSource("File");
-					
-					l.add(item1);
-					
-				}
-				*/
+				
 				s.setItems(l);
 				Thread.sleep(500);
 				
 				//**********POST Request***********
-					
-					
-					Response postResponse = request.baseUri("https://ulbw5caxdh.execute-api.eu-west-1.amazonaws.com/flag/").headers(headers).body(s).post("/sch-imp/schedule");
+					Response postResponse = 
+							given()
+							.baseUri("https://ulbw5caxdh.execute-api.eu-west-1.amazonaws.com/flag/")
+							.headers(headers)
+							.body(s).log().all().when()
+       					    .post("/sch-imp/schedule");
+
+							
 					int code=202;
 				//*********StatusCode Assertion*****
 					
