@@ -1,9 +1,9 @@
 Set the commandLineArguments
 -----------------------------
  
-This has to be set in CommandLines.java class-- Run as -- RunConfiguration--Arguments
+This has to be set in org.com.schedulemanagement.mmScheduler--> CommandLines.java --> Run as --> RunConfiguration-->  Arguments
 
-CommandLineArguments       Value                         Use
+CommandLineArguments       Value                        Use
    -dbc                    Yes/No              To clear Core/Schedule DB
 
    -mat                    String             eg:If we give A, Asset/Items MaterialID would be "MAT-A-1" in Core & Schedule
@@ -26,7 +26,7 @@ CommandLineArguments       Value                         Use
 
       1.DB will be cleared in both Core and Schedule before creating new Date
 
-      2.10000(Hardcoded) Assets/Assetfiles/FileLocations will be created in Core with 
+      2.10000(Hardcoded) Assets/Assetfiles(mxf_.123)/FileLocations will be created in Core with 
         MaterialId as MAT-B-1 to MAT-B-10000
        
        For---> MAT-B-1      to MAT-B-5000   -- BroadcastStatus: Ready for Tx
@@ -42,8 +42,8 @@ CommandLineArguments       Value                         Use
   
     Core and Schedule Data will be Created with above mentioned Data
 
-MainClass:
----------
+Class Used:
+-----------
 (org.com.schedulemanagement.mmScheduler)
 CommandLines.java        -- To be Executed
 CoreAPIData.java         -- To create Core Data
@@ -54,6 +54,12 @@ DateConfiguration.jav    -- Contains method to get current timestamp
 (org.ericsson.nucleus.test.mmschedule.models)
 Schedule.java            -- Pojo class for first-level schedule Properties
 item.java                -- Pojo class for Item-level schedule Properties
+
+TestClass:
+---------
+TestExecute.java
+PostSchedule.java
+PostScheduleStatic.java
 
 
 C
