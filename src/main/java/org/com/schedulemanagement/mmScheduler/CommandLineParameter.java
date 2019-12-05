@@ -1,7 +1,6 @@
 package org.com.schedulemanagement.mmScheduler;
 
 public class CommandLineParameter {
-	
 	private String dbclear;
 	private String materialID;
 	private String asset1;

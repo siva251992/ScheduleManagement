@@ -1,5 +1,8 @@
-org\com\scheduleproperties\Items.class
 org\com\schedulemanagement\mmScheduler\DateConfiguration.class
-org\com\scheduleproperties\Schedule.class
-org\com\scheduleproperties\AdditionalInfo.class
-org\com\schedulemanagement\mmScheduler\PostSchedule.class
+org\com\schedulemanagement\mmScheduler\CoreDataTest.class
+org\ericsson\nucleus\test\mmschedule\models\Schedule.class
+org\ericsson\nucleus\test\mmschedule\models\Item.class
+org\com\schedulemanagement\mmScheduler\CommandLineParameter.class
+org\com\schedulemanagement\mmScheduler\MMSchedDataApp.class
+org\com\schedulemanagement\mmScheduler\ScheduleData.class
+org\com\schedulemanagement\mmScheduler\CoreAPIData.class

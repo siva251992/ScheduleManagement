@@ -10,8 +10,6 @@ public class DateConfiguration {
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat1.format(new Date());
-		//System.out.println(date);
-	//	return dateString();
 		return date;
 	}
 	public String pastdateRequired() throws ParseException {
@@ -59,11 +57,4 @@ public class DateConfiguration {
 		//System.out.println(timeStamp);
 		return timeStamp;
 	}
-	
-	public static void main(String[] args) {
-		DateConfiguration d= new DateConfiguration();
-		d.dateRequired();
-	}
-	
-
 }
