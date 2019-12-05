@@ -19,11 +19,11 @@ import junit.framework.Assert;
 public class ScheduleData {
 	
 	//method to create schedules
-	public void createSchedule(CommandLineParameter param) throws InterruptedException {
+	public void createSchedule(CommandLineParameter param) throws InterruptedException, ParseException {
 		
 		
 		//*********DateConfiguration object*******
-				DateConfiguration d=new DateConfiguration();
+		DateConfiguration d=new DateConfiguration();
 				
 				
 		//*********DB Clear*********
@@ -39,42 +39,18 @@ public class ScheduleData {
 					   System.out.println("DB is not Cleared");
 				}
 		  
-		//**********Set TimeRequired************
-			String timeRequired = param.getTimeRequired();
-			if (timeRequired.equalsIgnoreCase("current")) {
-				try {
-					timeRequired=d.timeRequired();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					System.out.println(e.getMessage());
-				}				
-			}
-			else if (timeRequired.equalsIgnoreCase("past")) {
-				try {
-					timeRequired=d.pasttimeRequired();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					System.out.println(e.getMessage());
-				}
-			}
-			else {
-				System.out.println("Invalid Value- Enter past/current");
-				System.exit(0);
-				
-			}
-			
+		
 			
 			//*********Set Schedule & Item's count
 			
-			int reqId1 = Integer.parseInt(param.getScheduleStart());
-			//System.out.println("Enter the End number of Schedules");
-			int reqId2 = Integer.parseInt(param.getScheduleEnd());
+			
+			int schEnd = Integer.parseInt(param.getScheduleEnd());
 			//System.out.println("Enter the number of Items");
 			int matID=Integer.parseInt(param.getNoOfItems());
 			
 			int count=1;
 			int mat=1;
-			for (int i=reqId1;i<=reqId2; i++) {
+			for (int i=1;i<=schEnd; i++) {
 				
 				Map<String, String> headers = new HashMap<String, String>();
 				//************************Set Content-Type****************************	
@@ -99,11 +75,11 @@ public class ScheduleData {
 				
 				for (int j =1; j <=matID; j++) {
 					Item item1=new Item();
-					String mat_Id="MAT-"+param.getMaterialID()+"-"+mat;
+					String mat_Id="MAT-"+mat;
 					item1.setMaterialID(mat_Id);
 					item1.setContentType("Programme");
 					item1.setTitle("test1");
-					item1.setTimeRequired(timeRequired);
+					item1.setTimeRequired(d.timeRequired());
 					item1.setDuration(100);
 					item1.setMediaType("Video");
 					item1.setMediaSource("File");

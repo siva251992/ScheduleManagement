@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateConfiguration {
-	
 	public String dateRequired() {
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(pattern);
@@ -33,7 +32,7 @@ public class DateConfiguration {
 		String CurrenDate = simpleDateFormat.format(new Date());
 		Calendar c = Calendar.getInstance();
 		c.setTime(simpleDateFormat.parse(CurrenDate));
-		c.add(Calendar.HOUR, 2); 
+		c.add(Calendar.HOUR, 3); 
 		String timeStamp=simpleDateFormat.format(c.getTime());
 		return timeStamp;
 	}
@@ -61,11 +60,10 @@ public class DateConfiguration {
 		return timeStamp;
 	}
 	
-	
-	
-	public static void main(String[] args) throws ParseException {
-		DateConfiguration d=new DateConfiguration();
-		d.pasttimeRequired();
+	public static void main(String[] args) {
+		DateConfiguration d= new DateConfiguration();
+		d.dateRequired();
 	}
+	
 
 }

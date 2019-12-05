@@ -59,7 +59,7 @@ public class CoreAPIData {
 					
 				String mat=""+i;
 				//create asset
-				HALResource asset = cmppdata.createAsset(cmpp, "SPECIAL-UUID-TEST-ASSETGROUP-A", "Jag's Test", "MAT-"+c.getMaterialID()+"-"+mat,  
+				HALResource asset = cmppdata.createAsset(cmpp, "SPECIAL-UUID-TEST-ASSETGROUP-A", "TestAsset"+i, "MAT-"+mat,  
 						"BONNIER", 123456789, "Ready for Tx", "program");
 				String asset1 = asset.uri()+1;
 				log.info("Created Asset: " + asset.uri());
@@ -93,7 +93,7 @@ public class CoreAPIData {
 					
 					String mat=""+i;
 					//create asset
-					HALResource asset = cmppdata.createAsset(cmpp, "SPECIAL-UUID-TEST-ASSETGROUP-A", "Jag's Test", "MAT-"+c.getMaterialID()+"-"+mat,  
+					HALResource asset = cmppdata.createAsset(cmpp, "SPECIAL-UUID-TEST-ASSETGROUP-A", "TestAsset"+i, "MAT-"+mat,  
 							"BONNIER", 123456789, "Not Ready for Tx", "program");
 					String asset1 = asset.uri()+1;
 					log.info("Created Asset: " + asset.uri());

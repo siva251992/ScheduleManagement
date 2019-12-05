@@ -3,22 +3,19 @@ Set the commandLineArguments
  
 This has to be set in org.com.schedulemanagement.mmScheduler--> CommandLines.java --> Run as --> RunConfiguration-->  Arguments
 
-CommandLineArguments       Value                        Use
-   -dbc                    Yes/No              To clear Core/Schedule DB
+CommandLineArguments        Value                        Use
+    -dbc                    Yes/No              To clear Core/Schedule DB
 
-   -mat                    String             eg:If we give A, Asset/Items MaterialID would be "MAT-A-1" in Core & Schedule
+   
+    -item                   IntegerValue        To set No.of Items to be created in a Schedule
   
-   -time                  current/past         To set timeRequired property in Items
-
-   -item                   IntegerValue        To set No.of Items in a Schedule
   
-   -schStart
-   -schEnd                  IntegerValue        eg: If schStart=1 & schEnd=10, 10Schedules will be created
+    -sch                    IntegerValue        To set No.of Schedules to be created
 
 
   Sample:
   -------
-  -dbc Yes -mat B -time current -schStart 1 -schEnd 300 -item 300
+  -dbc Yes -sch 300 -item 300
   
   Run the class---> CommandLines.java
 
@@ -26,17 +23,18 @@ CommandLineArguments       Value                        Use
 
       1.DB will be cleared in both Core and Schedule before creating new Date
 
-      2.10000(Hardcoded) Assets/Assetfiles(mxf_.123)/FileLocations will be created in Core with 
-        MaterialId as MAT-B-1 to MAT-B-10000
+      2.10000(Hardcoded) Assets/Assetfiles/FileLocations will be created in Core with 
+        
+        MaterialId : MAT-1 to MAT-10000
+        Profile    : mxf_.123
        
-       For---> MAT-B-1      to MAT-B-5000   -- BroadcastStatus: Ready for Tx
-               MAT-B-5001   to MAT-B-10000  -- BroadcastStatus: Not Ready for Tx
+       For---> MAT-1      to MAT-5000   -- BroadcastStatus: Ready for Tx
+               MAT-5001   to MAT-10000  -- BroadcastStatus: Not Ready for Tx
 
-      3. Current Timestamp value would be set in TimeRequired Property in Schedules
-
-      4. 300 Schedules will be Created with 300 Items/Schedule in ScheduleDB
+      
+      3. 300 Schedules will be Created with 300 Items/Schedule in ScheduleDB
      
-      5. 90000 Items will be Created with MaterialId as MAT-B-1 to MAT-B-900000
+      4. 90000 Items will be Created with MaterialId as MAT-1 to MAT-900000
                      
 
   

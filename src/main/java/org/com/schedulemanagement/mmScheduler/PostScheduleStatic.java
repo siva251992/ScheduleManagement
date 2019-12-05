@@ -33,7 +33,7 @@ public class PostScheduleStatic {
 		//***********Create 300Schedules with 300Items*******************
 			
 			int mat=1;
-			for (int i=1;i<=200; i++) {
+			for (int i=1;i<=300; i++) {
 				
 				Map<String, String> headers = new HashMap<String, String>();
 				//************************Set Content-Type****************************	

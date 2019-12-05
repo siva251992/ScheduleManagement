@@ -6,7 +6,7 @@ import com.ericsson.testing.model.LibCmppException;
 
 public class CommandLines {
 	
-	public static void main(String args[]) throws InterruptedException {
+	public static void main(String args[]) throws InterruptedException, java.text.ParseException {
 		
    CommandLineParameter c=new CommandLineParameter();
 		
@@ -16,24 +16,13 @@ public class CommandLines {
 	        dbClear.setRequired(true);
 	        options.addOption(dbClear);
 
-	        Option materialId = new Option("mat", "materialID", true, "Part of a Material ID");
-	        materialId.setRequired(true);
-	        options.addOption(materialId);
-	        
-	        Option timReq= new Option("time","timeRequired",true,"TimeRequied for Items");
-            timReq.setRequired(true);
-            options.addOption(timReq);
-            
-            Option start=new Option("schStart","scheduleStart",true,"Start point of Schedule");
-            start.setRequired(true);
-            options.addOption(start);
-            
-            Option end=new Option("schEnd","scheduleEnd",true,"End point of Schedule");
-            start.setRequired(true);
-            options.addOption(end);
+	                    
+            Option schedule=new Option("sch","scheduleCount",true,"No of Schedules to be created");
+            schedule.setRequired(true);
+            options.addOption(schedule);
             
             Option item=new Option("item","itemCount",true,"No of Items to be Created");
-            start.setRequired(true);
+            item.setRequired(true);
             options.addOption(item);
 	        
 	        
@@ -42,18 +31,12 @@ public class CommandLines {
 	        HelpFormatter formatter = new HelpFormatter();
 	        CommandLine cmd;
 	        String dbclear="";
-	        String materialID="";
-	        String timeRequired="";
-	        String scheduleStart="";
-	        String scheduleEnd="";
+	    	String scheduleCount="";
 	        String itemCount="";
 	        try {
 	            cmd = parser.parse(options, args);
 	            dbclear = cmd.getOptionValue("dbclear");
-	            materialID = cmd.getOptionValue("materialID");
-	            timeRequired=cmd.getOptionValue("timeRequired");
-	            scheduleStart=cmd.getOptionValue("scheduleStart");
-	            scheduleEnd=cmd.getOptionValue("scheduleEnd");
+	            scheduleCount=cmd.getOptionValue("scheduleCount");
 	            itemCount=cmd.getOptionValue("itemCount");
 	            
 	        } catch (ParseException e) {
@@ -67,10 +50,7 @@ public class CommandLines {
 	       
 	        //Set the CommandLine Values to CommandLineParameters
 	        c.setDbclear(dbclear);
-	        c.setMaterialID(materialID);
-	        c.setTimeRequired(timeRequired);
-	        c.setScheduleStart(scheduleStart);
-	        c.setScheduleEnd(scheduleEnd);
+	        c.setScheduleEnd(scheduleCount);
 	        c.setNoOfItems(itemCount);
 	        
 	        
