@@ -1,35 +1,59 @@
+Set the commandLineArguments
+-----------------------------
+ 
+This has to be set in CommandLines.java class-- Run as -- RunConfiguration--Arguments
 
-By Default-----> PostSchedule.java(src/main/java)class will be executed
+CommandLineArguments       Value                         Use
+   -dbc                    Yes/No              To clear Core/Schedule DB
 
-To execute any other Class,same has to be configured in the pom.xml file under
-<build>
- .
+   -mat                    String             eg:If we give A, Asset/Items MaterialID would be "MAT-A-1" in Core & Schedule
+  
+   -time                  current/past         To set timeRequired property in Items
 
-   <configuration>
-		        <mainClass>org.com.schedulemanagement.mmScheduler.PostSchedule</mainClass>
-  </configuration>
-   .
-  </build>
-
-To Execute:
-===========
-open cmd:
-
-C:\Users\Administrator\eclipse-workspace\mmScheduler>mvn package exec:java
+   -item                   IntegerValue        To set No.of Items in a Schedule
+  
+   -schStart
+   -schEnd                  IntegerValue        eg: If schStart=1 & schEnd=10, 10Schedules will be created
 
 
-Do You want to clear the DB? Yes/No
+  Sample:
+  -------
+  -dbc Yes -mat B -time current -schStart 1 -schEnd 300 -item 300
+  
+  Run the class---> CommandLines.java
 
-Enter the materialID-- String eg:AA
+  For this CommandLineArguments,
 
-Enter the Start number of Schedules--- Integer eg:1
+      1.DB will be cleared in both Core and Schedule before creating new Date
 
-Enter the End number of Schedules--- Integer eg:10
+      2.10000(Hardcoded) Assets/Assetfiles/FileLocations will be created in Core with 
+        MaterialId as MAT-B-1 to MAT-B-10000
+       
+       For---> MAT-B-1      to MAT-B-5000   -- BroadcastStatus: Ready for Tx
+               MAT-B-5001   to MAT-B-10000  -- BroadcastStatus: Not Ready for Tx
 
-Enter the number of Items to be created --- Integer eg:100
+      3. Current Timestamp value would be set in TimeRequired Property in Schedules
+
+      4. 300 Schedules will be Created with 300 Items/Schedule in ScheduleDB
+     
+      5. 90000 Items will be Created with MaterialId as MAT-B-1 to MAT-B-900000
+                     
+
+  
+    Core and Schedule Data will be Created with above mentioned Data
+
+MainClass:
+---------
+(org.com.schedulemanagement.mmScheduler)
+CommandLines.java        -- To be Executed
+CoreAPIData.java         -- To create Core Data
+ScheduleDate.java        -- To create Schedule Date
+CommandLineParamter.java -- Contains CommandLine Arguments
+DateConfiguration.jav    -- Contains method to get current timestamp
+
+(org.ericsson.nucleus.test.mmschedule.models)
+Schedule.java            -- Pojo class for first-level schedule Properties
+item.java                -- Pojo class for Item-level schedule Properties
 
 
-10 Schedules will be created with Each Schedules containing 100 Items
-
-MaterialId for Schedule 1 would start from MAT-AA-1-1 to MAT-AA-1-100
-MaterialId for Schedule 1 would start from MAT-AA-2-1 to MAT-AA-2-100
+C

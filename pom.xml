@@ -50,7 +50,7 @@
 	  <artifactId>exec-maven-plugin</artifactId>
 	  <version>1.4.0</version>
 	  <configuration>
-		 <mainClass>org.com.schedulemanagement.mmScheduler.PostSchedule</mainClass>
+		 <mainClass>org.com.schedulemanagement.mmScheduler.CommandLines</mainClass>
 	  </configuration>
     </plugin>
 </plugins>

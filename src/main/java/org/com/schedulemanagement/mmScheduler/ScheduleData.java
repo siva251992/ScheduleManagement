@@ -10,30 +10,71 @@ import java.util.Map;
 
 import org.ericsson.nucleus.test.mmschedule.models.Item;
 import org.ericsson.nucleus.test.mmschedule.models.Schedule;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import junit.framework.Assert;
 
-
-
-public class PostScheduleStatic {
-	public static void postRequest() throws ParseException, InterruptedException {
-		//*********DB will be cleared by Default*********
-		 int count=1;
-		 
-		   RequestSpecification request = RestAssured.with();
-		   Response response = request.baseUri("http://ec2-52-50-126-1.eu-west-1.compute.amazonaws.com").get("/mongo-query");
-		   
-		   System.out.println(response.asString());
-		   
-		 //****************Object for DateConfiguration Class*****************	
-			DateConfiguration d=new DateConfiguration();
+public class ScheduleData {
+	
+	//method to create schedules
+	public void createSchedule(CommandLineParameter param) throws InterruptedException {
+		
+		
+		//*********DateConfiguration object*******
+				DateConfiguration d=new DateConfiguration();
+				
+				
+		//*********DB Clear*********
 			
-		//***********Create 300Schedules with 300Items*******************
+		  if(param.getDbclear().equalsIgnoreCase("yes")){
+					   RequestSpecification request = RestAssured.with();
+					   Response response = request.baseUri("http://ec2-52-50-126-1.eu-west-1.compute.amazonaws.com").get("/mongo-query");
+					   System.out.println(response.asString());
+					  
+				   			   
+				   }
+		  else {
+					   System.out.println("DB is not Cleared");
+				}
+		  
+		//**********Set TimeRequired************
+			String timeRequired = param.getTimeRequired();
+			if (timeRequired.equalsIgnoreCase("current")) {
+				try {
+					timeRequired=d.timeRequired();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}				
+			}
+			else if (timeRequired.equalsIgnoreCase("past")) {
+				try {
+					timeRequired=d.pasttimeRequired();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println(e.getMessage());
+				}
+			}
+			else {
+				System.out.println("Invalid Value- Enter past/current");
+				System.exit(0);
+				
+			}
 			
+			
+			//*********Set Schedule & Item's count
+			
+			int reqId1 = Integer.parseInt(param.getScheduleStart());
+			//System.out.println("Enter the End number of Schedules");
+			int reqId2 = Integer.parseInt(param.getScheduleEnd());
+			//System.out.println("Enter the number of Items");
+			int matID=Integer.parseInt(param.getNoOfItems());
+			
+			int count=1;
 			int mat=1;
-			for (int i=1;i<=200; i++) {
+			for (int i=reqId1;i<=reqId2; i++) {
 				
 				Map<String, String> headers = new HashMap<String, String>();
 				//************************Set Content-Type****************************	
@@ -48,7 +89,7 @@ public class PostScheduleStatic {
 								
 				String req_Id=""+i;
 				Schedule s=new Schedule();
-				s.setClient("new");
+				s.setClient("Bonnier");
 				s.setChannel("Cmore_Stars");
 				s.setDateRequired(d.dateRequired());
 				s.setRequestId(req_Id);
@@ -56,13 +97,13 @@ public class PostScheduleStatic {
 				s.setScheduleType("Primary");
 				List<Item> l = new ArrayList<Item>();
 				
-				for (int j =1; j <=300; j++) {
+				for (int j =1; j <=matID; j++) {
 					Item item1=new Item();
-					String mat_Id="MAT-"+mat;
+					String mat_Id="MAT-"+param.getMaterialID()+"-"+mat;
 					item1.setMaterialID(mat_Id);
 					item1.setContentType("Programme");
 					item1.setTitle("test1");
-					item1.setTimeRequired(d.timeRequired());
+					item1.setTimeRequired(timeRequired);
 					item1.setDuration(100);
 					item1.setMediaType("Video");
 					item1.setMediaSource("File");
@@ -80,7 +121,7 @@ public class PostScheduleStatic {
 							.baseUri("https://ulbw5caxdh.execute-api.eu-west-1.amazonaws.com/flag/")
 							.headers(headers)
 							.body(s).when()
-       					    .post("/sch-imp/schedule");
+	   					    .post("/sch-imp/schedule");
 
 							
 					int code=202;
@@ -89,17 +130,14 @@ public class PostScheduleStatic {
 					
 	     			Assert.assertEquals(code, postResponse.getStatusCode());
 	     			System.out.println("Schedule "+count +" Created successfully ");
-	     			System.out.println("Response Time is "+postResponse.getTime()+"ms");
+					System.out.println("Response Time is "+postResponse.getTime()+"ms");
 	     			count++;
-					
 			}
 		 
-		   System.out.println("Done");
-	}
-	
-	public static void main(String[] args) throws ParseException, InterruptedException {
-		postRequest();
-		
+		 
+
+		}
+
 	}
 
-}
+
